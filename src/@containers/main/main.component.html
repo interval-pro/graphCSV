@@ -1,0 +1,73 @@
+<div class="main-container">
+    <div class="toolbar-container">
+        <div class="upload-file">
+            <gs-button
+                (click)='fileInput.click()'
+                color='blue'
+                size='m'
+             > Upload File </gs-button>
+            <input
+                #fileInput
+                id='fileInput'
+                (change)='onCsvSelect($event)'
+                type="file"
+                accept='.csv'
+            >
+            <div class="file-name">
+                {{ fileName }}
+            </div>
+        </div>
+        <div class="axis" *ngIf='dataKeys.length'>
+            <gs-select *ngFor="let axis of axisFields" [placeholder]="axis" (change)='selectChange($event, axis)'>
+                <option 
+                    *ngFor='let option of dataKeys' 
+                    [value]="option.value"
+                > 
+                    {{ option.value }} ({{ option.length }})
+                </option>
+            </gs-select>
+        </div>
+        <gs-button
+            (click)='addDataSet()'
+            color='green'
+            size='m'
+            *ngIf='dataKeys.length'
+        > Add Dataset </gs-button>
+        <!-- <gs-button color='green' [disabled]='false' (click)='loadChart()'>Update</gs-button> -->
+    </div>
+    <div class="datasets-toolbar" *ngIf='dataKeys.length'>
+        <div class="rawDataSet-list">
+            <!-- <div
+                class="rawDataSet"
+                *ngFor='let ds of rawDataSets; let index = index'
+                [ngClass]="{ 'invalidFilter': !isFilterValid(ds.filterFunc) }"
+            > -->
+            <div class="rawDataSet" *ngFor='let ds of rawDataSets; let index = index'>
+                <div class="options">
+                    <div class="color">
+                        <span>Color: </span>
+                        <input type='text' [value]='ds.color' (change)='dataChange("color", $event, index)'>
+                    </div>
+                    <div class="size">
+                        <span>Size: </span>
+                        <input type='number' [value]='ds.size' step="1" (change)='dataChange("size", $event, index)' >
+                    </div>
+                </div>
+                <div class="filter-function">
+                    <span>(item, index, array) =></span> 
+                    <textarea
+                        #textarea
+                        (gsClickOutside)='onFocusOutTextArea(textarea)'
+                        (onfocusout)="onFocusOutTextArea(textarea)"
+                        (change)='dataChange("filter", $event, index)'
+                        (keydown.enter)='dataChange("filter", $event, index)'
+                    >{{ ds.filterFunc }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chart-container">
+        <div id='chart'></div>
+    </div>
+    <div class="loading" *ngIf='loading'>LOADING...</div>
+</div>

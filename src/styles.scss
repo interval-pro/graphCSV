@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+@import './@style/styles/main.scss';
+
+@font-face {
+    font-family: 'PlovdivSans';
+    src: url("./@style/fonts/PlovdivSans.otf") format("opentype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: 'PlovdivSans';
+}
+
+html { height: 100%; }
+body {
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;  
+    background: var(--white);
+    height: 100%; 
+}
+

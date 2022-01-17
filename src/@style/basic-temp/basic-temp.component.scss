@@ -1,0 +1,15 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .header {
+        width: 100%;
+        height: 3rem;
+        flex-shrink: 0;
+    }
+    .body {
+        width: 100%;
+        height: 100%;
+    }
+}
